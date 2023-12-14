@@ -36,8 +36,7 @@ jobs:
 
       - run: |
           echo "version: ${{ env.version }}"
-          has=[[ ${{ env.version }} == *-* ]]
-          echo $has
+          [[ ${{ env.version }} == *-* ]] && echo "字符串包含 '-'" || echo "字符串不包含 '-'"
 
       - uses: ncipollo/release-action@v1
         with:
