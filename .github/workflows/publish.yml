@@ -37,7 +37,7 @@ jobs:
 
       - run: |
           echo "version: ${{ env.version }}"
-          echo $([[ ${{ env.version }} == *-* ]] && echo 'true' || echo 'false')
+          echo "prerelease=$([[ ${{ env.version }} == *-* ]] && echo 'true' || echo 'false')"
 #          echo "version: ${{ env.prerelease }}"
 
 #      - uses: ncipollo/release-action@v1
