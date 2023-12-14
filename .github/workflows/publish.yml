@@ -52,5 +52,8 @@ jobs:
           prerelease: ${{ env.prerelease }}
           allowUpdates: true
           generateReleaseNotes: true
-          body: "Please refer to [README.md](https://github.com/${{ env.GITHUB_REPOSITORY }}/blob/v${{ env.version }}/README.md) for details."
+          body: "Please refer to [README.md](https://github.com/${{ github.repository }}/blob/v${{ env.version }}/README.md) for details."
           token: ${{ secrets.TOKEN }}
+
+# https://github.com/lhlyu/test/blob/v0.0.2/README.md
+# https://github.com//blob/v0.0.2/README.md
