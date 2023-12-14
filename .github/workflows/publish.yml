@@ -33,12 +33,12 @@ jobs:
 
       - run: |
           echo "version=$(grep -o '"version": *"[^"]*"' package.json | awk -F'"' '{print $4}')" >> "$GITHUB_ENV"
-          echo "prerelease=$([[ \${{ env.version }} == *-* ]] && echo 'true' || echo 'false')" >> "$GITHUB_ENV"
+#          echo "prerelease=$([[ \${{ env.version }} == *-* ]] && echo 'true' || echo 'false')" >> "$GITHUB_ENV"
 
       - run: |
           echo "version: ${{ env.version }}"
-          echo "version: ${{ env.prerelease }}"
-          [[ ${{ env.version }} == *-* ]] && echo "字符串包含 '-'" || echo "字符串不包含 '-'"
+#          echo "version: ${{ env.prerelease }}"
+          echo $([[ ${{ env.version }} == *-* ]] && echo 'true' || echo 'false')
 
       - uses: ncipollo/release-action@v1
         with:
