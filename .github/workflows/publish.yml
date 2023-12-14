@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: Release
     steps:
-      - name: Checkout
+      - name: 代码检出
         uses: actions/checkout@v4
 
 #      - name: Install pnpm
@@ -31,21 +31,25 @@ jobs:
 #      - name: Build
 #        run: pnpm build:npm
 
-      - run: |
+      - name: 获取版本号
+        run: |
           echo "version=$(grep -o '"version": *"[^"]*"' package.json | awk -F'"' '{print $4}')" >> "$GITHUB_ENV"
 
-      - run: |
+      - name: 是否是预发布
+        run: |
           echo "prerelease=$([[ ${{ env.version }} == *-* ]] && echo 'true' || echo 'false')" >> "$GITHUB_ENV"
 
-      - run: |
+      - name: 打印信息
+        run: |
           echo "version: ${{ env.version }}"
-          echo "version: ${{ env.prerelease }}"
+          echo "prerelease: ${{ env.prerelease }}"
 
-#      - uses: ncipollo/release-action@v1
-#        with:
-#          tag: "v${{ env.version }}"
-#          draft: false
-#          prerelease: ${{ env.prerelease }}
-#          allowUpdates: true
-#          generateReleaseNotes: true
-#          token: ${{ secrets.TOKEN }}
+      - name: 发布
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "v${{ env.version }}"
+          draft: false
+          prerelease: ${{ env.prerelease }}
+          allowUpdates: true
+          generateReleaseNotes: true
+          token: ${{ secrets.TOKEN }}
