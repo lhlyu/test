@@ -40,11 +40,11 @@ jobs:
 #          echo "version: ${{ env.prerelease }}"
           echo $([[ ${{ env.version }} == *-* ]] && echo 'true' || echo 'false')
 
-      - uses: ncipollo/release-action@v1
-        with:
-          tag: "v${{ env.version }}"
-          draft: false
-          prerelease: ${{ env.prerelease }}
-          allowUpdates: true
-          generateReleaseNotes: true
-          token: ${{ secrets.TOKEN }}
+#      - uses: ncipollo/release-action@v1
+#        with:
+#          tag: "v${{ env.version }}"
+#          draft: false
+#          prerelease: ${{ env.prerelease }}
+#          allowUpdates: true
+#          generateReleaseNotes: true
+#          token: ${{ secrets.TOKEN }}
