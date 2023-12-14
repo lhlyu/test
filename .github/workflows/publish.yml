@@ -1,0 +1,48 @@
+name: Publish Package
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: Release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install deps
+        run: pnpm i --no-frozen-lockfile --shamefully-hoist
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          registry-url: 'https://registry.npmjs.org/'
+          cache: 'pnpm'
+
+#      - name: Build
+#        run: pnpm build:npm
+
+      - run: |
+          echo "version=$(grep -o '"version": *"[^"]*"' package.json | awk -F'"' '{print $4}')" >> "$GITHUB_ENV"
+
+      - run: |
+          echo "version: ${{ env.version }}"
+          has=[[ ${{ env.version }} == *-* ]]
+          echo $has
+
+      - uses: ncipollo/release-action@v1
+        with:
+          tag: "v${{ env.version }}"
+          draft: false
+          allowUpdates: true
+          generateReleaseNotes: true
+          token: ${{ secrets.TOKEN }}
